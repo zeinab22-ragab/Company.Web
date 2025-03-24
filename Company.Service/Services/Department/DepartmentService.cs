@@ -26,9 +26,9 @@ namespace Company.Service.Services
 
         }
 
-        public void Delete(Department Department)
+        public void Delete(Department department)
         {
-            throw new NotImplementedException();
+            _departmentRepository.Delete(department);
         }
 
         public IEnumerable<Department> GetAll()
@@ -53,9 +53,7 @@ namespace Company.Service.Services
 
         public void Update(Department department)
         {
-       
-
-            _departmentRepository.Update(department);
+                   _departmentRepository.Update(department);
         }
     }
 }

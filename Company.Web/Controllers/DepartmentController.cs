@@ -53,7 +53,7 @@ namespace Company.Web.Controllers
             
         }
 
-        public IActionResult Details(int? id , string viewname = "Details")
+        public IActionResult Details(int? id , string viewName = "Details")
         {
             var department = _departmentService.GetById(id);
 
@@ -61,7 +61,7 @@ namespace Company.Web.Controllers
                 return RedirectToAction("NotFoundPage", null,"Home");
 
 
-            return View( viewname, department);
+            return View( viewName, department);
         }
 
         [HttpGet]
@@ -80,5 +80,30 @@ namespace Company.Web.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+       
+        public IActionResult Delete (int id)
+        {
+            
+
+            var department = _departmentService.GetById(id);
+
+            if (department is null)
+                return RedirectToAction("NotFoundPage", null, "Home");
+
+            _departmentService.Delete(department);
+
+            return RedirectToAction(nameof(Index));
+
+        }
+
+
+
+
+
+
+
+
+
     }
 }
