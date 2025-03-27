@@ -1,59 +1,70 @@
-﻿using Company.Data.Entities;
+using AutoMapper;
+using Company.Data.Entities;
 using Company.Repository.Interfaces;
 using Company.Service.Interfaces;
+using Company.Service.Interfaces.Department.Dto;
 
 namespace Company.Service.Services
 {
     public class DepartmentService : IDepartmentService
     {
-        private readonly IDepartmentRepository _departmentRepository;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public DepartmentService(IDepartmentRepository departmentRepository)
+        public DepartmentService(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _departmentRepository = departmentRepository;
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
-        public void Add(Department department)
+        public void Add(DepartmentDto departmentDto)
         {
-            var mappedDepartment = new Department
-            {
-                Code = department.Code,
-                Name = department.Name,
-                CreateAt = DateTime.Now,
-            };
+//map
+            //var mappedDepartment = new DepartmentDto
+            //{
+            //    Code = department.Code,
+            //    Name = department.Name,
+            //    CreateAt = DateTime.Now,
+            //};
+            var mappeddepartment =_mapper.Map<Department>(departmentDto);  
 
-            _departmentRepository.Add(mappedDepartment);
+            _unitOfWork.DepartmentRepository.Add(mappeddepartment);
 
+            _unitOfWork.Complete();
         }
 
-        public void Delete(Department department)
+        public void Delete(DepartmentDto departmentDto)
         {
-            _departmentRepository.Delete(department);
+            var mappeddepartment = _mapper.Map<Department>(departmentDto);
+            _unitOfWork.DepartmentRepository.Delete(mappeddepartment);
+            _unitOfWork.Complete();
         }
 
-        public IEnumerable<Department> GetAll()
+        public IEnumerable<DepartmentDto> GetAll()
         {
-           var departments = _departmentRepository.GetAll();
-            return departments;
+            var departments = _unitOfWork.DepartmentRepository.GetAll();
+            var mappeddepartment = _mapper.Map<IEnumerable<DepartmentDto>>(departments);
+            return mappeddepartment;
         }
 
-        public Department GetById(int? id)
+        public DepartmentDto GetById(int? id)
         {
             if (id is null)
                 return null;
 
-            var department = _departmentRepository.GetById(id.Value);
+            var department = _unitOfWork.DepartmentRepository.GetById(id.Value);
 
             if (department is null)
                 return null;
 
-
-            return department;
+            var mappeddepartment = _mapper.Map<DepartmentDto>(department);
+            return mappeddepartment;
         }
 
-        public void Update(Department department)
+        public void Update(DepartmentDto departmentDto)
         {
-                   _departmentRepository.Update(department);
+         //   _unitOfWork.DepartmentRepository.Update(mappeddepartment);
+          //  _unitOfWork.Complete();
         }
     }
 }
