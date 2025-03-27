@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Company.Data.Contexts;
+﻿using Company.Data.Contexts;
 using Company.Data.Entities;
 using Company.Repository.Interfaces;
 
@@ -19,10 +14,8 @@ namespace Company.Repository.Repositories
             _context = context;
         }
 
-        public Employee GetEmployeeByName(string name)
-        {
-            throw new NotImplementedException();
-        }
+        public IEnumerable<Employee> GetEmployeeByName(string name)
+        => _context.Employees.Where(x => x.Name.Trim().ToLower().Contains(name.Trim().ToLower())).ToList();
 
         public IEnumerable<Employee> GetEmployeesByAddress(string address)
         {
