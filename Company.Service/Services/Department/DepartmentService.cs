@@ -7,7 +7,7 @@ using Company.Service.Interfaces.Department.Dto;
 
 namespace Company.Service.Services
 {
-    public class DepartmentService : IDepartmentService
+    public class DepartmentService : DepartmentDto
     {
         
         private readonly IUnitOfWork _unitOfWork;
@@ -43,13 +43,13 @@ namespace Company.Service.Services
 
         }
 
-        public void Delete(Department department)
-        {
-            _departmentRepository.Delete(department);
-        }
+        //public void Delete(Department department)
+        //{
+        //    _departmentRepository.Delete(department);
+        //}
 
-            return mappeddepartments;
-        }
+        //    return mappeddepartments;
+        //}
 
         public DepartmentDto GetById(int? id)
         {
@@ -65,9 +65,9 @@ namespace Company.Service.Services
             return mappeddepartment;
         }
 
-        public void Update(DepartmentDto department)
-        {
-                   _departmentRepository.Update(department);
-        }
+        //public void Update(DepartmentDto department)
+        //{
+        //           _departmentRepository.Update(department);
+        //}
     }
 }
