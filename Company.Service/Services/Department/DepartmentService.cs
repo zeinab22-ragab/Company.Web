@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Company.Data.Entities;
 using Company.Repository.Interfaces;
 using Company.Service.Interfaces;
@@ -8,19 +8,18 @@ namespace Company.Service.Services
 {
     public class DepartmentService : IDepartmentService
     {
-        
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
         public DepartmentService(IUnitOfWork unitOfWork, IMapper mapper)
         {
-           
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
         public void Add(DepartmentDto departmentDto)
-        {//map
+        {
+//map
             //var mappedDepartment = new DepartmentDto
             //{
             //    Code = department.Code,
@@ -32,26 +31,21 @@ namespace Company.Service.Services
             _unitOfWork.DepartmentRepository.Add(mappeddepartment);
 
             _unitOfWork.Complete();
-
         }
-
 
         public void Delete(DepartmentDto departmentDto)
         {
             var mappeddepartment = _mapper.Map<Department>(departmentDto);
-
             _unitOfWork.DepartmentRepository.Delete(mappeddepartment);
             _unitOfWork.Complete();
-
         }
 
         public IEnumerable<DepartmentDto> GetAll()
         {
             var departments = _unitOfWork.DepartmentRepository.GetAll();
-            var mappeddepartment = _mapper.Map< IEnumerable < DepartmentDto >  >(departments);
+            var mappeddepartment = _mapper.Map<IEnumerable<DepartmentDto>>(departments);
             return mappeddepartment;
         }
-
 
         public DepartmentDto GetById(int? id)
         {
@@ -67,12 +61,10 @@ namespace Company.Service.Services
             return mappeddepartment;
         }
 
-        public void Update(DepartmentDto department)
+        public void Update(DepartmentDto departmentDto)
         {
-          //    _unitOfWork.DepartmentRepository.Update(department);
-            //    _unitOfWork.Complete();
+         //   _unitOfWork.DepartmentRepository.Update(mappeddepartment);
+          //  _unitOfWork.Complete();
         }
-
-        
     }
 }
