@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using AutoMapper;
+﻿using AutoMapper;
 using Company.Data.Entities;
 using Company.Repository.Interfaces;
 using Company.Service.Interfaces;
@@ -7,7 +6,7 @@ using Company.Service.Interfaces.Department.Dto;
 
 namespace Company.Service.Services
 {
-    public class DepartmentService : DepartmentDto
+    public class DepartmentService : IDepartmentService
     {
         
         private readonly IUnitOfWork _unitOfWork;
@@ -29,10 +28,13 @@ namespace Company.Service.Services
             //    CreateAt = DateTime.Now,
             //};
             var mappeddepartment =_mapper.Map<Department>(departmentDto);  
+
             _unitOfWork.DepartmentRepository.Add(mappeddepartment);
+
             _unitOfWork.Complete();
 
         }
+
 
         public void Delete(DepartmentDto departmentDto)
         {
@@ -43,13 +45,13 @@ namespace Company.Service.Services
 
         }
 
-        //public void Delete(Department department)
-        //{
-        //    _departmentRepository.Delete(department);
-        //}
+        public IEnumerable<DepartmentDto> GetAll()
+        {
+            var departments = _unitOfWork.DepartmentRepository.GetAll();
+            var mappeddepartment = _mapper.Map< IEnumerable < DepartmentDto >  >(departments);
+            return mappeddepartment;
+        }
 
-        //    return mappeddepartments;
-        //}
 
         public DepartmentDto GetById(int? id)
         {
@@ -65,9 +67,12 @@ namespace Company.Service.Services
             return mappeddepartment;
         }
 
-        //public void Update(DepartmentDto department)
-        //{
-        //           _departmentRepository.Update(department);
-        //}
+        public void Update(DepartmentDto department)
+        {
+          //    _unitOfWork.DepartmentRepository.Update(department);
+            //    _unitOfWork.Complete();
+        }
+
+        
     }
 }
